@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorAccent">
+
+    <ImageButton
+    android:id="@+id/firstavatar"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_alignParentTop="true"
+    android:layout_marginTop="50dp"
+    android:layout_marginStart="30dp"
+    android:text=""
+    android:src="@mipmap/ic_first_avatar"
+        android:background="@color/colorAccent"/>
+    <ImageButton
+        android:id="@+id/secondavatar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="50dp"
+        android:layout_marginStart="240dp"
+        android:text=""
+        android:src="@mipmap/ic_second_avatar"
+        android:background="@color/colorAccent"/>
+    <ImageButton
+        android:id="@+id/thirdavatar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="257dp"
+        android:layout_marginStart="240dp"
+        android:text=""
+        android:src="@mipmap/ic_third_avatar"
+        android:background="@color/colorAccent"/>
+    <ImageButton
+    android:id="@+id/fourthavatar"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_alignParentTop="true"
+    android:layout_marginTop="257dp"
+    android:layout_marginStart="30dp"
+    android:text=""
+    android:src="@mipmap/ic_fourth_avatar"
+        android:background="@color/colorAccent"/>
+
+    <ImageButton
+        android:id="@+id/fifthavatar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="457dp"
+        android:layout_marginStart="30dp"
+        android:text=""
+        android:src="@mipmap/ic_fifth_avatar"
+        android:background="@color/colorAccent"/>
+
+    <ImageButton
+        android:id="@+id/sixthavatar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="457dp"
+        android:layout_marginStart="240dp"
+        android:text=""
+        android:src="@mipmap/ic_sixth_avatar"
+        android:background="@color/colorAccent"/>
+
+
+
+
+
+
+
+
+
+    </RelativeLayout>

@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/mainRL"
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        tools:context=".activity.activity.LeadersActivity">
+
+    <ImageView android:layout_width="35dp"
+               android:id="@+id/leadersRowIV"
+               android:layout_height="35dp"
+               android:layout_marginLeft="10dp"
+               android:layout_alignParentLeft="true"
+               tools:src="@mipmap/ic_first_avatar"
+               android:layout_centerInParent="true"
+               android:src="@mipmap/ic_launcher"/>
+
+
+    <TextView android:layout_width="wrap_content"
+              android:id="@+id/leadersRowNickNameTV"
+              android:layout_toRightOf="@id/leadersRowIV"
+              android:layout_toLeftOf="@id/leadersRowPointTV"
+              android:layout_marginLeft="15dp"
+              android:layout_centerInParent="true"
+              android:layout_height="wrap_content"
+              android:singleLine="true"
+              android:textSize="18sp"
+              android:textColor="@color/colorPrimary"
+              android:ellipsize="marquee"
+              tools:text="NickNamedssfdsfdsfdsfdsdsdsadasdsadadsdasdsadas"/>
+
+    <TextView
+            android:layout_alignParentRight="true"
+            android:layout_centerInParent="true"
+            android:id="@+id/leadersRowPointTV"
+            android:layout_marginRight="15dp"
+            android:layout_marginLeft="15dp"
+            android:layout_width="wrap_content"
+            tools:text="Point"
+            android:textSize="16sp"
+            android:textColor="@color/colorAccent"
+            android:layout_height="wrap_content"/>
+
+</RelativeLayout>
