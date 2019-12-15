@@ -1,1 +1,1 @@
-# Kotlin Project for card matching game
+# Kotlin Project for a card matching game
