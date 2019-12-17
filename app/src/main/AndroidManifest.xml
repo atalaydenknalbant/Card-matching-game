@@ -10,14 +10,15 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".activity.activity.GameActivity"></activity>
-        <activity android:name=".activity.activity.MainActivity">
+        <activity android:name=".activity.activity.MainActivity"/>
+
+        <activity android:name=".activity.activity.LoginActivity" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".activity.activity.LoginActivity" />
         <activity android:name=".activity.activity.RegisterActivity" />
         <activity android:name=".activity.activity.SelectavatarActivity" />
         <activity android:name=".activity.activity.LeadersActivity"></activity>

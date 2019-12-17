@@ -14,9 +14,10 @@ import com.example.kotlin_project1.activity.activity.data.UserData
 import com.example.kotlin_project1.activity.activity.helper.AvatarHelp
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
+import com.google.firebase.firestore.FirebaseFirestore
 
 class RegisterActivity : AppCompatActivity() {
-
+    lateinit var db:FirebaseFirestore
     lateinit var registerBtn : Button
     lateinit var registerEmail : EditText
     lateinit var registerPassword : EditText
@@ -25,13 +26,9 @@ class RegisterActivity : AppCompatActivity() {
     lateinit var registernickName : EditText
     lateinit var auth: FirebaseAuth
     lateinit var imageview:ImageView
-    lateinit var ref:DatabaseReference
-    lateinit var userDataList:MutableList<UserData>
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_register)
-        userDataList = mutableListOf()
-        ref = FirebaseDatabase.getInstance().getReference("users")
         imageview = findViewById(R.id.imageviewpp)
         registerBtn = findViewById(R.id.RegisterBtn)
         registerLoginBtn = findViewById(R.id.RegisterLoginBtn)
@@ -39,28 +36,15 @@ class RegisterActivity : AppCompatActivity() {
         registerEmail = findViewById(R.id.RegisterEmail)
         registerPassword = findViewById(R.id.RegisterPassword)
         auth = FirebaseAuth.getInstance()
+        db = FirebaseFirestore.getInstance()
         progressbar = ProgressDialog(this)
         registerEmail.setText(intent.getStringExtra("email"))
         registerPassword.setText(intent.getStringExtra("pw"))
         registernickName.setText(intent.getStringExtra("nickname"))
-        val avatar:String? = intent.getStringExtra("avatar")
+        val avatar:String? = intent.getStringExtra("avatar") ?:"avatar1"
         val avatarhelp:AvatarHelp = AvatarHelp()
         avatarhelp.changeavatar(avatar,imageview)
-        ref.addValueEventListener(object: ValueEventListener{
-            override fun onDataChange(var1: DataSnapshot){
-            if(var1!!.exists()){
-                userDataList.clear()
-                for(u in var1.children){
-                    val user = u.getValue(UserData::class.java)
-                    userDataList.add(user!!)
-                }
-            }
-            }
 
-            override fun onCancelled(var1: DatabaseError){
-            // TODO Handle error
-            }
-        })
 
 
 
@@ -91,7 +75,6 @@ class RegisterActivity : AppCompatActivity() {
             val email = registerEmail.text.toString().trim()
             val password = registerPassword.text.toString().trim()
             val nickname = registernickName.text.toString().trim()
-
             if (TextUtils.isEmpty(email)) {
 
                 registerEmail.error = "Enter Email"
@@ -125,14 +108,25 @@ class RegisterActivity : AppCompatActivity() {
                 if (task.isSuccessful) {
 
 
+                    val userid = auth.currentUser!!.uid
+                    var user = hashMapOf(
+                        "email" to email,
+                        "pw" to password,
+                        "nickName" to nickname,
+                        "score" to 0,
+                        "highScore" to 0,
+                        "avatar" to avatar
+                    )
 
-
-                    val userid = ref.push().key!!
-                    val ud = UserData(userid, nickname, password, score = 0, highScore = 0,
-                        avatar = avatar                                                     )
-                    ref.child(userid).setValue(ud).addOnCompleteListener{
-                        Toast.makeText(applicationContext,"User Data Saved Successfully",Toast.LENGTH_LONG).show()
-                    }
+                    db.collection("users")
+                        .document(userid)
+                        .set(user)
+                            .addOnSuccessListener { documentReference ->
+                            Toast.makeText(this, "Signed Up", Toast.LENGTH_SHORT).show()
+                        }
+                        .addOnFailureListener { e ->
+                            Toast.makeText(this, "Failed to Sign Up", Toast.LENGTH_SHORT).show()
+                        }
 
 
 

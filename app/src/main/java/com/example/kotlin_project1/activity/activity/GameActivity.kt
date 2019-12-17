@@ -7,15 +7,20 @@ import android.os.Handler
 import android.view.View
 import android.widget.LinearLayout
 import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.core.view.children
 import kotlinx.android.synthetic.main.activity_game.*
 import kotlin.random.Random
 import com.example.kotlin_project1.R
+import com.example.kotlin_project1.activity.activity.data.UserData
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FirebaseFirestore
 
 class GameActivity : AppCompatActivity(), View.OnClickListener {
-
+    lateinit var auth : FirebaseAuth
+    lateinit var db: FirebaseFirestore
     private lateinit var cards: List<LinearLayout>
     private lateinit var cardsEmojis: List<TextView>
     var seconds:Long = 0
@@ -48,6 +53,8 @@ class GameActivity : AppCompatActivity(), View.OnClickListener {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_game)
         prepareCards()
+        auth = FirebaseAuth.getInstance()
+        db = FirebaseFirestore.getInstance()
         object : CountDownTimer(60000, 1000) {
             override fun onTick(millisUntilFinished: Long) {
                 tvTimeleft.setText("Time Left:" + millisUntilFinished / 1000)
@@ -71,6 +78,24 @@ class GameActivity : AppCompatActivity(), View.OnClickListener {
                     tvScore.text = (tvScore.text.toString().toInt() + 1).toString()
                     if(tvScore.text == "6") {
                         score = 600 + (seconds * 3)
+                        val userid = auth.currentUser!!.uid
+                        val docRef = db.collection("users").document(userid)
+                        docRef.get().addOnSuccessListener { documentSnapshot ->
+                            var user = documentSnapshot.toObject(UserData::class.java)
+                            var hs:String =user!!.highScore.toString()
+                            if (score>hs.toLong()){
+                                docRef.update("highScore",score)
+                                docRef.update("score",score)
+
+                            }
+                            else
+                            {
+                                docRef.update("score",score)
+                            }
+                        }
+
+
+
                         val intent = Intent(applicationContext , MainActivity::class.java)
 
                         startActivity(intent)

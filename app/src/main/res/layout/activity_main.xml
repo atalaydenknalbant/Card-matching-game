@@ -7,14 +7,7 @@
     tools:context=".activity.activity.MainActivity"
     android:background="@color/colorAccent">
 
-    <TextView
-        android:id="@+id/textView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="107dp"
-        android:text="123111111" />
+
 
     <Button
         android:id="@+id/MainLogoutBtn"
@@ -53,18 +46,17 @@
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="10dp"
-        android:src="@mipmap/ic_first_avatar"
         android:id="@+id/Mainimageview"
 
         />
     <TextView
-        android:id="@+id/MainNickname"
+        android:id="@+id/textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="107dp"
-        android:text="Atalay" />
+        android:text="" />
     <TextView
         android:id="@+id/MainScores"
         android:layout_width="wrap_content"
@@ -73,6 +65,6 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="140dp"
         android:layout_marginBottom="30dp"
-        android:text="HIGHscore:0 Score:0"/>
+        android:text=""/>
         </RelativeLayout>
     </RelativeLayout>
