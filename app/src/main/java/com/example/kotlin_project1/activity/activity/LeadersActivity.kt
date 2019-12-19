@@ -41,9 +41,7 @@ class LeadersActivity : AppCompatActivity() {
         LeaderData(getResourceId(it[5].first), it[5].second, it[5].third)
     )
 
-    val leaderData = leaders[0]
-    leaderData.run { point = 1_000 }
-    leaderData.let { it.point = 1000 }
+
 
 
     return leaders.toMutableList()
