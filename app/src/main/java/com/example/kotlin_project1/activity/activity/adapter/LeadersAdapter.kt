@@ -9,7 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.kotlin_project1.R
 import com.example.kotlin_project1.activity.activity.data.LeaderData
 
-import kot.bau.com.bauapp.view.LeaderView
+import com.example.kotlin_project1.activity.activity.view.LeaderView
 import kotlinx.android.synthetic.main.new_leader_row_layout.view.*
 
 class LeadersAdapter(

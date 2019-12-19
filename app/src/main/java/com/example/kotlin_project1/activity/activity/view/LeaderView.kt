@@ -1,4 +1,4 @@
-package kot.bau.com.bauapp.view
+package com.example.kotlin_project1.activity.activity.view
 
 import android.content.Context
 import android.util.AttributeSet
