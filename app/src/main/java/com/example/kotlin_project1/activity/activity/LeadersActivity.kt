@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.os.PersistableBundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
-import androidx.constraintlayout.solver.widgets.Snapshot
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.kotlin_project1.R
 import com.example.kotlin_project1.activity.activity.data.LeaderData

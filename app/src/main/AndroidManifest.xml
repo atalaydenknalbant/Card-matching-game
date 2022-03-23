@@ -9,10 +9,11 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".activity.activity.GameActivity"></activity>
+        <activity android:name=".activity.activity.GameActivity" />
         <activity android:name=".activity.activity.MainActivity"/>
 
-        <activity android:name=".activity.activity.LoginActivity" >
+        <activity android:name=".activity.activity.LoginActivity"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -21,7 +22,7 @@
         </activity>
         <activity android:name=".activity.activity.RegisterActivity" />
         <activity android:name=".activity.activity.SelectavatarActivity" />
-        <activity android:name=".activity.activity.LeadersActivity"></activity>
+        <activity android:name=".activity.activity.LeadersActivity" />
 
     </application>
 
