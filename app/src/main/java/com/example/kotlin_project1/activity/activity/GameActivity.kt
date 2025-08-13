@@ -7,22 +7,22 @@ import android.os.Handler
 import android.view.View
 import android.widget.LinearLayout
 import android.widget.TextView
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.core.view.children
-import kotlinx.android.synthetic.main.activity_game.*
-import kotlin.random.Random
 import com.example.kotlin_project1.R
 import com.example.kotlin_project1.activity.activity.data.UserData
+import com.example.kotlin_project1.databinding.ActivityGameBinding
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
+import kotlin.random.Random
 
 class GameActivity : AppCompatActivity(), View.OnClickListener {
     lateinit var auth : FirebaseAuth
     lateinit var db: FirebaseFirestore
     private lateinit var cards: List<LinearLayout>
     private lateinit var cardsEmojis: List<TextView>
+    private lateinit var binding: ActivityGameBinding
     var seconds:Long = 0
     var score:Long = 0
     private var isTwoCardsSet: Boolean = false
@@ -51,19 +51,20 @@ class GameActivity : AppCompatActivity(), View.OnClickListener {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_game)
+        binding = ActivityGameBinding.inflate(layoutInflater)
+        setContentView(binding.root)
         prepareCards()
         auth = FirebaseAuth.getInstance()
         db = FirebaseFirestore.getInstance()
         object : CountDownTimer(60000, 1000) {
             override fun onTick(millisUntilFinished: Long) {
-                tvTimeleft.setText("Time Left:" + millisUntilFinished / 1000)
+                binding.tvTimeleft.text = "Time Left:" + millisUntilFinished / 1000
                 seconds =  millisUntilFinished / 1000
             }
 
             override fun onFinish() {
-                tvTimeleft.setText("Time's Up!")
-                var seconds =  0
+                binding.tvTimeleft.text = "Time's Up!"
+                seconds =  0
             }
         }.start()
 
@@ -75,8 +76,8 @@ class GameActivity : AppCompatActivity(), View.OnClickListener {
                 if (cardEmojiHolder == (view.children.first() as TextView).text.toString()) {
                     view.background = null
                     view.children.first().visibility = View.VISIBLE
-                    tvScore.text = (tvScore.text.toString().toInt() + 1).toString()
-                    if(tvScore.text == "6") {
+                    binding.tvScore.text = (binding.tvScore.text.toString().toInt() + 1).toString()
+                    if(binding.tvScore.text == "6") {
                         score = 600 + (seconds * 3)
                         val userid = auth.currentUser!!.uid
                         val docRef = db.collection("users").document(userid)
@@ -148,36 +149,36 @@ class GameActivity : AppCompatActivity(), View.OnClickListener {
 
     private fun prepareCards() {
         cards = listOf(
-            cardOne,
-            cardTwo,
-            cardThree,
-            cardFour,
-            cardFive,
-            cardSix,
-            cardSeven,
-            cardEight,
-            cardNine,
-            cardTen,
-            cardEleven,
-            cardTwelve
+            binding.cardOne,
+            binding.cardTwo,
+            binding.cardThree,
+            binding.cardFour,
+            binding.cardFive,
+            binding.cardSix,
+            binding.cardSeven,
+            binding.cardEight,
+            binding.cardNine,
+            binding.cardTen,
+            binding.cardEleven,
+            binding.cardTwelve
         )
         for (card in cards) {
             card.setOnClickListener(this)
         }
 
         cardsEmojis = listOf(
-            cardEmojiOne,
-            cardEmojiTwo,
-            cardEmojiThree,
-            cardEmojiFour,
-            cardEmojiFive,
-            cardEmojiSix,
-            cardEmojiSeven,
-            cardEmojiEight,
-            cardEmojiNine,
-            cardEmojiTen,
-            cardEmojiEleven,
-            cardEmojiTwelve
+            binding.cardEmojiOne,
+            binding.cardEmojiTwo,
+            binding.cardEmojiThree,
+            binding.cardEmojiFour,
+            binding.cardEmojiFive,
+            binding.cardEmojiSix,
+            binding.cardEmojiSeven,
+            binding.cardEmojiEight,
+            binding.cardEmojiNine,
+            binding.cardEmojiTen,
+            binding.cardEmojiEleven,
+            binding.cardEmojiTwelve
         )
         while (!isAllCardsSet) {
             if (cardsEmojis.all { it.text.isNotEmpty() }) {

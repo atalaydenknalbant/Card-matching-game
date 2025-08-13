@@ -1,60 +1,39 @@
 package com.example.kotlin_project1.activity.activity
 
 import android.os.Bundle
-import android.os.PersistableBundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.kotlin_project1.R
-import com.example.kotlin_project1.activity.activity.data.LeaderData
 import com.example.kotlin_project1.activity.activity.adapter.LeadersAdapter
+import com.example.kotlin_project1.activity.activity.data.LeaderData
 import com.example.kotlin_project1.activity.activity.data.UserData
-import com.example.kotlin_project1.activity.activity.helper.AvatarHelp
-import com.google.firebase.auth.FirebaseAuth
+import com.example.kotlin_project1.databinding.LeadersActivityBinding
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.Query
-import kotlinx.android.synthetic.main.leaders_activity.*
 
 class LeadersActivity : AppCompatActivity() {
 
+    private lateinit var db: FirebaseFirestore
+    private lateinit var binding: LeadersActivityBinding
 
-    lateinit var db:FirebaseFirestore
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.leaders_activity)
+        binding = LeadersActivityBinding.inflate(layoutInflater)
+        setContentView(binding.root)
         db = FirebaseFirestore.getInstance()
 
-
-
-
-
-    getlistofusers {      fun generateLeadersData(): MutableList<LeaderData> {
-
-
-    val leaders = mutableListOf(
-        LeaderData(getResourceId(it[0].first), it[0].second, it[0].third),
-        LeaderData(getResourceId(it[1].first), it[1].second, it[1].third),
-        LeaderData(getResourceId(it[2].first), it[2].second, it[2].third),
-        LeaderData(getResourceId(it[3].first), it[3].second, it[3].third),
-        LeaderData(getResourceId(it[4].first), it[4].second, it[4].third),
-        LeaderData(getResourceId(it[5].first), it[5].second, it[5].third)
-    )
-
-
-
-
-    return leaders.toMutableList()
-}
-        val mLayoutManager = LinearLayoutManager(this)
-        with(leadersRV) {
-            layoutManager = mLayoutManager
-            adapter = LeadersAdapter(generateLeadersData(), this@LeadersActivity)
+        getlistofusers { list ->
+            val leaders = list.map { (avatar, name, score) ->
+                LeaderData(getResourceId(avatar), name, score)
+            }.toMutableList()
+            val mLayoutManager = LinearLayoutManager(this)
+            with(binding.leadersRV) {
+                layoutManager = mLayoutManager
+                adapter = LeadersAdapter(leaders, this@LeadersActivity)
+            }
         }
     }
-
-    }
-
-
 
     private fun getResourceId(id: String?) = when (id) {
         "avatar1" -> R.mipmap.ic_first_avatar
@@ -66,45 +45,29 @@ class LeadersActivity : AppCompatActivity() {
         else -> R.mipmap.ic_first_avatar
     }
 
-
-
-
-
-
-
-
-
-    fun getlistofusers(myCallback: (List<Triple<String?,String?,Long?>>) -> Unit){
-
-        var i=0
+    fun getlistofusers(myCallback: (List<Triple<String?, String?, Long?>>) -> Unit) {
         val colRef = db.collection("users")
-        colRef
-            .addSnapshotListener{ _ , e ->
-                if (e != null) {
-                    return@addSnapshotListener
-                }
+        colRef.addSnapshotListener { _, e ->
+            if (e != null) {
+                return@addSnapshotListener
             }
+        }
 
-        colRef
-            .orderBy("highScore", Query.Direction.DESCENDING)
+        colRef.orderBy("highScore", Query.Direction.DESCENDING)
             .get()
             .addOnCompleteListener { task ->
                 if (task.isSuccessful) {
-                    var list = mutableListOf<Triple<String?, String?, Long?>>()
+                    val list = mutableListOf<Triple<String?, String?, Long?>>()
+                    var i = 0
                     for (document in task.result!!.iterator()) {
-                        if (i == 6) {
-                            break
-
-                        }
+                        if (i == 6) break
                         val doc = document.toObject(UserData::class.java)
                         list.add(Triple(doc.avatar, doc.nickName, doc.highScore))
                         Log.d("abcd", list.toString())
-
                         i += 1
                     }
                     myCallback(list)
                 }
             }
-
     }
 }
